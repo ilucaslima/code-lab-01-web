@@ -1,6 +1,7 @@
 "use client";
 
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import Button from "../components/ui/button";
 import { Input } from "../components/ui/input";
@@ -9,29 +10,43 @@ import EmailIcon from "../assets/icons/email.png";
 import PasswordIcon from "../assets/icons/password.png";
 import Link from "next/link";
 import { api } from "../config/api";
-
-interface IFormInputs {
-  name: string;
-  age: number;
-  email: string;
-  password: string;
-  olocomeu: string;
-}
+import { toast } from "react-toastify";
+import {
+  IRegisterUserSchema,
+  registerUserSchema,
+} from "../schema/users/register";
+import { useState } from "react";
+import { ClipLoader } from "react-spinners";
 
 const Register = () => {
-  const { register, handleSubmit } = useForm<IFormInputs>();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = (data: IFormInputs) => {
-    try {
-      api.post("/api/users/register", {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IRegisterUserSchema>({
+    resolver: zodResolver(registerUserSchema),
+  });
+
+  const onSubmit = async (data: IRegisterUserSchema) => {
+    setIsLoading(true);
+    await api
+      .post("/api/users/register", {
         name: data.name,
         age: Number(data.age),
         email: data.email,
         password: data.password,
+      })
+      .then(() => {
+        toast.success("Usuário registrado com sucesso!");
+      })
+      .catch(() => {
+        toast.error("Erro ao registrar usuário. Tente novamente.");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   return (
@@ -58,18 +73,21 @@ const Register = () => {
           <Input
             label="Name"
             placeholder="Seu nome completo"
+            error={errors.name?.message}
             {...register("name")}
           />
           <Input
             label="Age"
             placeholder="Sua idade"
             type="number"
+            error={errors.name?.message}
             {...register("age")}
           />
           <Input
             label="Email"
             icon={EmailIcon}
             placeholder="name@neon.com"
+            error={errors.name?.message}
             {...register("email")}
           />
           <Input
@@ -77,9 +95,12 @@ const Register = () => {
             icon={PasswordIcon}
             placeholder="Digite sua senha"
             type="password"
+            error={errors.name?.message}
             {...register("password")}
           />
-          <Button>Registrar-me</Button>
+          <Button disabled={isLoading}>
+            {isLoading ? <ClipLoader size={16} /> : "Registrar-me"}
+          </Button>
         </form>
 
         <div className="text-sm text-center">

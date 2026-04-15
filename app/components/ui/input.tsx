@@ -11,12 +11,14 @@ interface IInputProps {
   label: string;
   icon?: StaticImageData;
   placeholder: string;
+  error?: string;
 }
 
 export const Input = ({
   label,
   icon,
   placeholder,
+  error,
   ...rest
 }: IInputProps & InputHTMLAttributes<HTMLInputElement>) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -51,6 +53,7 @@ export const Input = ({
           </button>
         )}
       </div>
+      {error && <p className="text-xs text-left text-red-300 mt-1">{error}</p>}
     </div>
   );
 };

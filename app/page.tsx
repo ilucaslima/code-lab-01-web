@@ -5,7 +5,7 @@ import { Input } from "@/app/components/ui/input";
 import Button from "./components/ui/button";
 import Link from "next/link";
 
-export default function Home() {
+export default function Login() {
   return (
     <div className="flex-1 flex flex-col items-center text-center justify-center">
       <div className="mb-6">
