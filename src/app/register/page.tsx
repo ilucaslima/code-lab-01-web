@@ -3,18 +3,18 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import Button from "../components/ui/button";
-import { Input } from "../components/ui/input";
+import Button from "../../components/ui/button";
+import { Input } from "../../components/ui/input";
 
-import EmailIcon from "../assets/icons/email.png";
-import PasswordIcon from "../assets/icons/password.png";
+import EmailIcon from "@/src/assets/icons/email.png";
+import PasswordIcon from "@/src/assets/icons/password.png";
 import Link from "next/link";
-import { api } from "../config/api";
+import { api } from "../../config/api";
 import { toast } from "react-toastify";
 import {
   IRegisterUserSchema,
   registerUserSchema,
-} from "../schema/users/register";
+} from "../../schema/users/register";
 import { useState } from "react";
 import { ClipLoader } from "react-spinners";
 
@@ -80,14 +80,14 @@ const Register = () => {
             label="Age"
             placeholder="Sua idade"
             type="number"
-            error={errors.name?.message}
+            error={errors.age?.message}
             {...register("age")}
           />
           <Input
             label="Email"
             icon={EmailIcon}
             placeholder="name@neon.com"
-            error={errors.name?.message}
+            error={errors.email?.message}
             {...register("email")}
           />
           <Input
@@ -95,7 +95,7 @@ const Register = () => {
             icon={PasswordIcon}
             placeholder="Digite sua senha"
             type="password"
-            error={errors.name?.message}
+            error={errors.password?.message}
             {...register("password")}
           />
           <Button disabled={isLoading}>

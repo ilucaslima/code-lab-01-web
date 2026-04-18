@@ -1,8 +1,8 @@
-import EmailIcon from "./assets/icons/email.png";
-import PasswordIcon from "./assets/icons/password.png";
+import EmailIcon from "@/src/assets/icons/email.png";
+import PasswordIcon from "@/src/assets/icons/password.png";
 
-import { Input } from "@/app/components/ui/input";
-import Button from "./components/ui/button";
+import { Input } from "@/src/components/ui/input";
+import Button from "../components/ui/button";
 import Link from "next/link";
 
 export default function Login() {
