@@ -1,0 +1,35 @@
+import { type NextRequest, NextResponse } from 'next/server'
+import {
+   authRoutes,
+   DEFAULT_LOGIN_REDIRECT,
+   publicRoutes,
+} from '../routes'
+
+async function getToken() {
+   return "123"
+}
+
+export async function middleware(req: NextRequest) {
+   const { nextUrl } = req
+   const pathname = nextUrl.pathname
+
+   const token = await getToken()
+   const isLoggedIn = !!token
+
+   const isPublicRoute = publicRoutes.includes(pathname)
+   const isAuthRoute = authRoutes.includes(pathname)
+
+   if (isAuthRoute && isLoggedIn) {
+      return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl))
+   }
+
+   if (!isLoggedIn && !isPublicRoute && !isAuthRoute) {
+      return NextResponse.redirect(new URL('/', nextUrl))
+   }
+
+   return NextResponse.next()
+}
+
+export const config = {
+   matcher: ['/((?!_next/static|_next/image|favicon.ico).*)', '/api/:path*'],
+}
