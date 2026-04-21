@@ -1,42 +1,73 @@
-import Image from 'next/image'
+import Image from "next/image";
+import clsx from "clsx";
 
 interface VideoCardProps {
-    thumbnailUrl: string;
-    duration: string;
-    title: string;
-    channelName: string;
-    views: string;
+  thumbnailUrl: string;
+  duration: string;
+  title: string;
+  channelName: string;
+  views: string;
+  variant?: "default" | "large" | "small";
+  className?: string;
 }
 
-export function VideoCard({ thumbnailUrl, duration, title, channelName, views }: VideoCardProps) {
-    return(
-        <div className="flex flex-col gap-3 w-full max-w-[360px] cursor-pointer group">
+export function VideoCard({
+  thumbnailUrl,
+  duration,
+  title,
+  channelName,
+  views,
+  variant = "default",
+  className,
+}: VideoCardProps) {
+  return (
+    <div
+      className={clsx(
+        "flex flex-col gap-3 cursor-pointer group",
+        variant === "large" && "max-w-180",
+        variant === "default" && "max-w-90",
+        variant === "small" && "max-w-65",
+        className,
+      )}
+    >
+      <div className="relative w-full rounded-xl overflow-hidden bg-zinc-800 aspect-video">
+        <Image
+          src={thumbnailUrl}
+          alt={`Thumbnail de ${title}`}
+          fill
+          className="object-cover transition-transform duration-200 group-hover:scale-105"
+        />
 
-            {/* Container da thumbnail do vídeo */}
-            <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-zinc-800">
-                <Image
-                    src={thumbnailUrl}
-                    alt={`Thumbnail de ${title}`}
-                    fill
-                    className="object-cover transition-transform duration-200 group-hover:scale-105"
-                />
-                <span className="absolute bottom-2 right-2 bg-black/80 text-white text-xs font-semibold px-1.5 py-0.5 rounded">
-                    {duration}
-                </span>
-            </div>
+        <span className="absolute bottom-2 right-2 bg-black/80 text-white text-xs font-semibold px-1.5 py-0.5 rounded">
+          {duration}
+        </span>
+      </div>
 
-            {/* Container das informações do vídeo */}
-            <div className="flex flex-col">
-                <h3 className="text-white font-semibold text-base leading-tight line-clamp-2">
-                    {title}
-                </h3>
-                <div className="text-zinc-400 text-sm mt-1 flex items-center gap-1">
-                    <span>{channelName}</span>
-                    <span>•</span>
-                    <span>{views}</span>
-                </div>
-            </div>
+      <div className="flex flex-col">
+        <h3
+          className={clsx(
+            "text-white font-semibold leading-tight line-clamp-2",
+            variant === "large" && "text-xl",
+            variant === "default" && "text-base",
+            variant === "small" && "text-sm",
+          )}
+        >
+          {title}
+        </h3>
 
+        <div
+          className={clsx(
+            "text-zinc-400 mt-1 flex items-center gap-1",
+            variant === "large" && "text-base",
+            variant === "default" && "text-sm",
+            variant === "small" && "text-xs",
+          )}
+        >
+          <span>{channelName}</span>
+          <span>•</span>
+          <span>{views}</span>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
