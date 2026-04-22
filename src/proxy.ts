@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { authRoutes, DEFAULT_LOGIN_REDIRECT, publicRoutes } from "../routes";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
    const { nextUrl } = request;
    const pathname = nextUrl.pathname;
 
