@@ -2,7 +2,13 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Home, Upload, Library, History, ThumbsUp, Clock, } 
+import { 
+  Home, 
+  Upload, 
+  Library, 
+  History, 
+  ThumbsUp, 
+  Clock, } 
 from "lucide-react";
 export default function Sidebar() {
   const pathname = usePathname();
