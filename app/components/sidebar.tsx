@@ -37,7 +37,7 @@ export default function Sidebar() {
       
       <nav className="flex flex-col gap-4 pl-1"> 
         {menu.map((item) => { 
-          const isActive = pathname === item.path; 
+          const isActive = pathname.startsWith(item.path);
           const Icon = item.icon; 
           if (item.clickable === false) { 
             return (
