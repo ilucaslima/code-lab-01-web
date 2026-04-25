@@ -1,3 +1,6 @@
+"use client";
+
+import React from "react";
 import { VideoCard } from "@/src/components/VideoCard";
 
 const DashboardPage = () => {
