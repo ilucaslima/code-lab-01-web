@@ -1,5 +1,13 @@
 import { faker } from "@faker-js/faker/locale/pt_BR";
-import type { commentType, videoType } from "../app/types/video";
+import {
+   type commentType,
+   type nextUpType,
+   VideoSegment,
+   type videoType,
+} from "../../types/video";
+
+export const getVideosMock = (count: number): videoType[] =>
+   Array.from({ length: count }, getVideoMock);
 
 export const getVideoMock = (): videoType => ({
    id: faker.string.uuid(),
@@ -35,17 +43,21 @@ export const getVideoMock = (): videoType => ({
          "Backend",
          "Fullstack",
       ],
-      { min: 2, max: 5 }
+      { min: 2, max: 5 },
    ),
    comments: Array.from(
       { length: faker.number.int({ min: 2, max: 8 }) },
-      getCommentMock
+      getCommentMock,
    ),
    commentsCount: faker.number.int({ min: 2, max: 500 }),
    createdAt: faker.date.past(),
    videoUrl: faker.internet.url(),
+   nextUp: Array.from(
+      { length: faker.number.int({ min: 2, max: 15 }) },
+      getNextUpMock,
+   ),
+   VideoSegment: faker.helpers.enumValue(VideoSegment),
 });
-
 export const getCommentMock = (): commentType => ({
    id: faker.number.int({ min: 1, max: 999999 }),
    author: {
@@ -58,4 +70,23 @@ export const getCommentMock = (): commentType => ({
    content: faker.lorem.paragraph(),
    publishedAt: faker.date.recent().toISOString(),
    likes: faker.number.int({ min: 0, max: 5000 }),
+   avatarUrl: `https://i.pravatar.cc/150?img=${faker.number.int({
+      min: 1,
+      max: 70,
+   })}`,
+});
+
+export const getNextUpMock = (): nextUpType => ({
+   id: faker.string.uuid(),
+   title: `Vídeo ${faker.lorem.sentence()}`,
+   thumbnailUrl: `https://picsum.photos/300/200?random=${faker.number.int({
+      min: 1,
+      max: 1000,
+   })}`,
+   channelName: `Canal ${faker.company.name()}`,
+   duration: `${faker.number.int({ min: 1, max: 59 })}:${faker.number.int({
+      min: 10,
+      max: 59,
+   })}`,
+   views: faker.number.int({ min: 0, max: 1000000 }),
 });

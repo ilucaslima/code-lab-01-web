@@ -1,13 +1,13 @@
 import {
-   Bookmark,
-   CornerDownLeft,
-   Ellipsis,
-   Share2,
-   ThumbsDown,
-   ThumbsUp,
+	Bookmark,
+	CornerDownLeft,
+	Ellipsis,
+	Share2,
+	ThumbsDown,
+	ThumbsUp,
 } from "lucide-react";
 import Image from "next/image";
-import type { videoType } from "../app/types/video";
+import type { videoType } from "../types/video";
 import { fromNow } from "../utils/dayjs";
 import { formatNumber } from "../utils/format-number";
 
