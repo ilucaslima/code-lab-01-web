@@ -1,32 +1,44 @@
-import { Bell, PlusSquare, User } from "lucide-react";
+"use client"
+
+import { Bell, Search } from "lucide-react";
+import Image from "next/image";
+import { useUserStore } from "@/stores/useUserStore";
+import Button from "./ui/button";
 
 export function Header() {
+    const { user } = useUserStore()
     return (
         <header className="flex items-center justify-between px-6 py-7 bg-black text-white">
 
-        {/* logo */}
-        <div className="text-xl font-bold text-pink-500">
+        <div className="text-[20px] text-[#FF8B9B] font-bold">
             CodePlay
         </div>
 
-        {/* pesquisar */}
-        <div>
-            <input type="text" placeholder="procure seu vídeo" className="bg-transparent outline-none text-sm w-full"/>
+        <div className="w-[384px] bg-[#262626] py-3 px-4 rounded-full flex items-center gap-3">
+            <Search className="text-white/50" />
+            <input type="text" placeholder="Procure seu vídeo" className="bg-transparent outline-none text-sm w-full"/>
         </div>
 
-        {/*Ações*/}
         <div className="flex items-center gap-4">
-            
-            <PlusSquare className="cursor-pointer"/>
-            
+            <button className="text-[#FF8B9B] flex items-center gap-2" type="button">
+                <Image alt="plus icon" src="/plusVideoIcon.svg" width={19} height={16} />
+                <p>
+                    Upload
+                </p>
+            </button>
             <Bell className="cursor-pointer"/>
 
-            <button className="bg-pink-500 px-4 py-1 rounded-full text-sm font-medium hover:bg-pink-600">
-                Upload
-            </button>
-
-            <User className="cursor-pointer"/>
-        </div>
+<Button   className="rounded-full">
+                <Image
+                    src={user?.avatarUrl || "https://i.pravatar.cc/300"}
+                    alt="User Avatar"
+                    width={32}
+                    height={32}
+                    className="rounded-full"
+                />
+            
+    </Button>       
+     </div>
         </header>
     );
 }

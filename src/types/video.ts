@@ -15,6 +15,17 @@ export type videoType = {
    commentsCount?: number;
    createdAt: Date
    videoUrl: string;
+   nextUp?: nextUpType[]
+   VideoSegment?: VideoSegment;
+}
+
+export type nextUpType = {
+   id: string;
+   title: string;
+   thumbnailUrl: string;
+   channelName: string;
+   duration: string;
+   views: number;
 }
 
 export type commentType = {
@@ -23,7 +34,17 @@ export type commentType = {
       username: string,
       avatarUrl: string,
    },
+   avatarUrl: string;
    content: string;
    publishedAt: string;
    likes: number;
+}
+
+export enum VideoSegment {
+   BACKEND = "Backend",
+   FRONTEND = "Frontend",
+   FULLSTACK = "Fullstack",
+   ARTIFICIAL_INTELLIGENCE = "Inteligência Artificial",
+   DATA_SCIENCE = "Data Science",
+   DEVOPS = "DevOps",
 }
